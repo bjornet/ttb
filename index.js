@@ -1,46 +1,51 @@
-import * as fs from 'fs/promises';
+#!/usr/bin/env node
+import * as fs from "fs/promises";
+import yargs from 'yargs'
+import { hideBin } from 'yargs/helpers';
 
-// const credentials = require('./credentials.json');
-console.log('beginning of project');
+const argv = yargs(hideBin(process.argv)).argv
 
-fs.readFile('./credentials').then((res) => {
-    console.log(res);
-}).catch(e => console.log(e));
+console.log('For application help, type Yelp for Help: `node index.js --yelp`, woff woff!');
+
+const usageMessage = `
+  Usage:
+    \`node index.js --type=<code_type> --code=<issue_code>\`
+    <code_type>: feature | fix | hotfix
+    <issue_code>: [CLIENT-NNN] eg. OS-339
+
+    Example: \`node index.js --type=feature --code=OS-339\`
+  `;
+
+if (argv.yelp) {
+  console.log(usageMessage);
+}
+
+const getCredentials = () => {
+  fs.readFile('./credentials.json', 'utf8')
+  .then(file => JSON.parse(file))
+  .then(credentials => {
+    console.log(credentials);
+
+  })
+  .catch(() =>
+    console.log("Could not find credentials. Please refer to README.md")
+  );
+};
+
+//getCredentials();
 
 
+const missingArugmentsMessage =`
+  You provided the following:
+    type: ${argv.type}
+    code: ${argv.code}
+  `;
 
+if (!argv.type || !argv.code) {
+  console.log(missingArugmentsMessage, usageMessage);
+}
 
-// if [[ ! -f $(dirname $0)/credentials.txt ]]; then
-//   echo "Could not find credentials.txt"
-//   echo "Please read instructions header in this file"
-//   exit 1
-// fi
-
-// source $(dirname $0)/credentials.txt
-
-// function print_help {
-//   printf "\nUsage: \n
-//     \`jira_branch_creator.sh <code_type> <issue_code>\` \n
-//     <code_type>: eg. feature | fix | hotfix \n
-//     <issue_code>: [CLIENT-NNN] eg. SCO-192 \n\n"
-// }
-
-// if [ "${1}" == "--help" ]; then
-//   print_help
-//   exit;
-// fi
-
-// if [ -z "${1}" ]; then
-//     echo "Missing argument: <code_type>"
-//     print_help
-//     exit
-// fi
-
-// if [ -z "${2}" ]; then
-//     echo "Missing argument: <issue_code>"
-//     print_help
-//     exit
-// fi
+// const jiraIssueCode =
 
 // jira_issue_code=$(curl -u $email:$apiToken -X GET -H "Content-Type: application/json" https://lybesweden.atlassian.net/rest/api/latest/issue/{$2} | jq -r '.fields.summary')
 
