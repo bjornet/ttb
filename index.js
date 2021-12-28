@@ -1,66 +1,49 @@
 #!/usr/bin/env node
-import * as fs from "fs/promises";
-import yargs from 'yargs'
-import { hideBin } from 'yargs/helpers';
+// import { config as dotenvConfig } from 'dotenv';
 
-const argv = yargs(hideBin(process.argv)).argv
+import { setupJiraConnector, getJiraIssue } from './getJiraIssue.js';
+import { kebabCase, print } from './utils/index.js';
+import { getHelpMessage, getUsageMessage, getMissingArugmentsMessage } from './messages.js';
+import { getArguments } from './arguments.js';
 
-console.log('For application help, type Yelp for Help: `node index.js --yelp`, woff woff!');
+// dotenvConfig({
+//   debug: true,
+// });
 
-const usageMessage = `
-  Usage:
-    \`node index.js --type=<code_type> --code=<issue_code>\`
-    <code_type>: feature | fix | hotfix
-    <issue_code>: [CLIENT-NNN] eg. OS-339
+// const envtest = process.env.FOO;
+// console.log(envtest);
 
-    Example: \`node index.js --type=feature --code=OS-339\`
-  `;
+print(getHelpMessage);
 
-if (argv.yelp) {
-  console.log(usageMessage);
+const {
+  type,
+  code,
+  yelp
+} = getArguments();
+
+if (yelp) {
+  print(getUsageMessage);
 }
 
-const getCredentials = () => {
-  fs.readFile('./credentials.json', 'utf8')
-  .then(file => JSON.parse(file))
-  .then(credentials => {
-    console.log(credentials);
+if (!type || !code) {
+  print(getMissingArugmentsMessage.bind(null, {type, code}));
+  print(getUsageMessage);
 
-  })
-  .catch(() =>
-    console.log("Could not find credentials. Please refer to README.md")
-  );
+  // TODO: exit
+}
+
+const generateBranchName = ({ summary }) => {
+  return kebabCase(`${type}/${code}-${summary}`);
 };
 
-//getCredentials();
+const App = async () => {
+  await setupJiraConnector(code);
 
+  const branchName = generateBranchName(await getJiraIssue());
 
-const missingArugmentsMessage =`
-  You provided the following:
-    type: ${argv.type}
-    code: ${argv.code}
-  `;
+  console.log(branchName);
+};
 
-if (!argv.type || !argv.code) {
-  console.log(missingArugmentsMessage, usageMessage);
-}
-
-// const jiraIssueCode =
-
-// jira_issue_code=$(curl -u $email:$apiToken -X GET -H "Content-Type: application/json" https://lybesweden.atlassian.net/rest/api/latest/issue/{$2} | jq -r '.fields.summary')
-
-// if [ "${jira_issue_code}" == "null" ]; then
-//     echo "No matching issue in Jira"
-//     print_help
-//     exit
-// fi
-
-// # branch_name: <code_type>/<issue_code>-issue-title-all-lowercase eg. `feature/SWE-123-sso-sign-on`
-// branch_name="${1}/$(echo ${2}-${jira_issue_code//-/} | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-')"
+App();
 
 // git checkout -b $branch_name
-
-// if [ -f vendor/bin/cl ]; then
-//   type=$(echo ${1} | sed 's/bugfix/fix/')
-//   vendor/bin/cl add ${type} "${jira_issue_code}" "https://lybesweden.atlassian.net/browse/${2}"
-// fi
