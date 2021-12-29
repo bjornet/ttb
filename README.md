@@ -9,6 +9,7 @@
 
 ## Requirements
 - Node v13.x or higher
+- A [JIRA API token](https://id.atlassian.com/manage-profile/security/api-tokens)
 
 ## Usage
 
