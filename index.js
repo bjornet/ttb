@@ -2,12 +2,13 @@
 // import { config as dotenvConfig } from 'dotenv';
 
 import { setupJiraConnector, getJiraIssue } from './getJiraIssue.js';
-import { kebabCase, print } from './utils/index.js';
+import { kebabCase, print, shellExec } from './utils/index.js';
 import { getHelpMessage, getUsageMessage, getMissingArugmentsMessage } from './messages.js';
 import { getArguments } from './arguments.js';
 
 // dotenvConfig({
 //   debug: true,
+//   path: new URL('.env', import.meta.url),
 // });
 
 // const envtest = process.env.FOO;
@@ -47,3 +48,11 @@ const App = async () => {
 App();
 
 // git checkout -b $branch_name
+shellExec('sh temp.sh', (err, response) => {
+  if(!err){
+    console.log(response);
+  }else {
+    console.log('error!');
+    console.log(err);
+  }
+});
