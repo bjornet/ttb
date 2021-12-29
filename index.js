@@ -1,18 +1,8 @@
 #!/usr/bin/env node
-// import { config as dotenvConfig } from 'dotenv';
-
 import { setupJiraConnector, getJiraIssue } from './getJiraIssue.js';
 import { kebabCase, print, shellExec } from './utils/index.js';
 import { getHelpMessage, getUsageMessage, getMissingArugmentsMessage } from './messages.js';
 import { getArguments } from './arguments.js';
-
-// dotenvConfig({
-//   debug: true,
-//   path: new URL('.env', import.meta.url),
-// });
-
-// const envtest = process.env.FOO;
-// console.log(envtest);
 
 const {
   type,

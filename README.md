@@ -5,6 +5,7 @@
   - point free
   - curry
   - compose
+- [ ] Remove dotenv if not needed
 
 ## Requirements
 - Node v13.x or higher
