@@ -1,5 +1,6 @@
 import { get } from 'https';
 import { getCredentials } from './credentials.js';
+import { print } from './utils/print.js';
 
 let httpOpts = {
   host: 'recose.atlassian.net',
@@ -13,6 +14,7 @@ let httpOpts = {
 
 export const setupJiraConnector = async (issueCode) => {
   const { email, apiToken } = await getCredentials();
+  console.log('DEBUG: the getCredentials function will thorow if email or apiToken are not set... what do we have to do?');
 
   httpOpts.headers = {
     ...httpOpts.headers,
@@ -27,7 +29,6 @@ export const setupJiraConnector = async (issueCode) => {
 export const getJiraIssue = async () => {
   return new Promise((resolve, reject) => {
     const req = get(httpOpts, (res) => {
-      console.log(httpOpts);
       let chunks = [];
 
       res.on("data", (buffer) => {
@@ -43,7 +44,7 @@ export const getJiraIssue = async () => {
         }
 
         if (!jiraIssueSchema?.fields?.summary) {
-          reject(new Error("Could not find issue summary/title"));
+          reject(print(() => `Could not find summary for issue code ${httpOpts.path}`));
         }
 
         resolve(jiraIssueSchema.fields);

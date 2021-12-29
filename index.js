@@ -14,45 +14,57 @@ import { getArguments } from './arguments.js';
 // const envtest = process.env.FOO;
 // console.log(envtest);
 
-print(getHelpMessage);
-
 const {
   type,
   code,
   yelp
 } = getArguments();
 
-if (yelp) {
-  print(getUsageMessage);
-}
-
-if (!type || !code) {
-  print(getMissingArugmentsMessage.bind(null, {type, code}));
-  print(getUsageMessage);
-
-  // TODO: exit
-}
-
 const generateBranchName = ({ summary }) => {
   return kebabCase(`${type}/${code}-${summary}`);
 };
 
+const haltOnInitMessages = () => {
+  if (yelp) {
+    print(getUsageMessage);
+    return true;
+  }
+
+  if (!type || type === true || !code || code === true) {
+    print(getMissingArugmentsMessage.bind(null, {type, code}));
+    print(getUsageMessage);
+
+    return true;
+  }
+
+  return false;
+};
+
+const checkoutBranch = (branchName) => {
+  shellExec(`git checkout -b ${branchName}`, (err, stdout) => {
+    if(err){
+      console.log(err);
+      return;
+    }
+
+    console.log(stdout);
+  });
+};
+
 const App = async () => {
+  print(getHelpMessage);
+
+  if (haltOnInitMessages()) {
+    return;
+  }
+
   await setupJiraConnector(code);
 
-  const branchName = generateBranchName(await getJiraIssue());
-
-  console.log(branchName);
+  checkoutBranch(
+    generateBranchName(
+      await getJiraIssue()
+    )
+  );
 };
 
 App();
-
-// git checkout -b $branch_name
-shellExec('sh temp.sh', (err, response) => {
-  if(!err){
-    console.log(response);
-  }else {
-    console.log('error!');
-    console.log(err);
-  }
-});
