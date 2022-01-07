@@ -37,7 +37,11 @@ const checkoutBranch = (branchName) => {
       return;
     }
 
+    /**
+     * TODO: use the print method
+     */
     console.log(stdout);
+    console.log(`Branch named '${branchName}' was created`);
   });
 };
 
