@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 import { setupJiraConnector, getJiraIssue } from './getJiraIssue.js';
-import { kebabCase, print, shellExec } from './utils/index.js';
+import { print } from './utils/index.js';
+import { checkoutGitBranch, generateGitBranchName, mapType} from './gitManager.js';
 import { getHelpMessage, getUsageMessage, getMissingArugmentsMessage } from './messages.js';
 import { getArguments } from './arguments.js';
+
+const default_type = 'feature';
 
 const {
   type,
@@ -10,17 +13,13 @@ const {
   yelp
 } = getArguments();
 
-const generateBranchName = ({ summary }) => {
-  return kebabCase(`${type}/${code}-${summary}`);
-};
-
 const haltOnInitMessages = () => {
   if (yelp) {
     print(getUsageMessage);
     return true;
   }
 
-  if (!type || type === true || !code || code === true) {
+  if (!code || code === true) {
     print(getMissingArugmentsMessage.bind(null, {type, code}));
     print(getUsageMessage);
 
@@ -28,21 +27,6 @@ const haltOnInitMessages = () => {
   }
 
   return false;
-};
-
-const checkoutBranch = (branchName) => {
-  shellExec(`git checkout -b ${branchName}`, (err, stdout) => {
-    if(err){
-      console.log(err);
-      return;
-    }
-
-    /**
-     * TODO: use the print method
-     */
-    console.log(stdout);
-    console.log(`Branch named '${branchName}' was created`);
-  });
 };
 
 const App = async () => {
@@ -54,10 +38,19 @@ const App = async () => {
 
   await setupJiraConnector(code);
 
-  checkoutBranch(
-    generateBranchName(
-      await getJiraIssue()
-    )
+  const {
+    summary,
+    issuetype: {
+      name: jiraType,
+    }
+  } = await getJiraIssue();
+
+  checkoutGitBranch(
+    generateGitBranchName({
+      summary,
+      type: type || mapType(jiraType) || default_type,
+      code,
+    })
   );
 };
 

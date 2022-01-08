@@ -14,7 +14,9 @@ let httpOpts = {
 
 export const setupJiraConnector = async (issueCode) => {
   const { email, apiToken } = await getCredentials();
-  console.log('DEBUG: the getCredentials function will thorow if email or apiToken are not set... what do we have to do?');
+  /**
+   * TODO: The getCredentials function will thorow if email or apiToken are not set... what do we have to do?
+   */
 
   httpOpts.headers = {
     ...httpOpts.headers,
