@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { setupJiraConnector, getJiraIssue } from './getJiraIssue.js';
+import { setupJiraConnector, fetchJiraIssue, isJiraCodeValid, getExtractJiraCode } from './jira/index.js';
 import { print } from './utils/index.js';
 import { checkoutGitBranch, generateGitBranchName, mapType} from './gitManager.js';
 import { getHelpMessage, getUsageMessage, getMissingArugmentsMessage } from './messages.js';
@@ -19,7 +19,7 @@ const haltOnInitMessages = () => {
     return true;
   }
 
-  if (!code || code === true) {
+  if (!isJiraCodeValid(code)) {
     print(getMissingArugmentsMessage.bind(null, {type, code}));
     print(getUsageMessage);
 
@@ -36,20 +36,22 @@ const App = async () => {
     return;
   }
 
-  await setupJiraConnector(code);
+  await setupJiraConnector(
+    getExtractJiraCode(code)
+  );
 
   const {
     summary,
     issuetype: {
       name: jiraType,
     }
-  } = await getJiraIssue();
+  } = await fetchJiraIssue();
 
   checkoutGitBranch(
     generateGitBranchName({
       summary,
       type: type || mapType(jiraType) || default_type,
-      code,
+      code: getExtractJiraCode(code),
     })
   );
 };

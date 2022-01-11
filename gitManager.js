@@ -1,5 +1,6 @@
 import { kebabCase, shellExec } from "./utils/index.js";
-import { gitJiraTypeMap } from './gitJiraTypeMap.js';
+import { gitJiraTypeMap } from './jira/index.js';
+import { print } from './utils/index.js'
 
 export const generateGitBranchName = ({ summary, type, code }) => {
   const typeAsKebabCase = kebabCase(type);
@@ -9,18 +10,19 @@ export const generateGitBranchName = ({ summary, type, code }) => {
 };
 
 export const checkoutGitBranch = (branchName) => {
-  shellExec(`git checkout -b ${branchName}`, (err, stdout) => {
+  shellExec(`git checkout -b ${branchName}`, (err, message) => {
     if (err) {
       console.log(err);
       return;
     }
 
-    /**
-     * TODO: use the print method
-     */
-    console.log(stdout);
-    console.log(`Branch named '${branchName}' was created`);
+    print(() => `message: ${message}`);
   });
 };
 
-export const mapType = (jiraType) => gitJiraTypeMap.reduce((_, curr) => jiraType && jiraType === curr.jira ? curr.git : _, null);
+export const mapType = (jiraType) =>
+  gitJiraTypeMap.reduce(
+    (acc, curr) =>
+      (jiraType && jiraType === curr.jira) ? curr.git : acc,
+    null
+  );
