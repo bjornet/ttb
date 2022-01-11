@@ -1,6 +1,6 @@
 import { get } from 'https';
-import { getCredentials } from './credentials.js';
-import { print } from './utils/print.js';
+import { getCredentials } from '../credentials.js';
+import { print } from '../utils/print.js';
 
 let httpOpts = {
   host: 'recose.atlassian.net',
@@ -28,7 +28,7 @@ export const setupJiraConnector = async (issueCode) => {
   httpOpts.path = `/rest/api/2/issue/${issueCode}`;
 }
 
-export const getJiraIssue = async () => {
+export const fetchJiraIssue = async () => {
   return new Promise((resolve, reject) => {
     const req = get(httpOpts, (res) => {
       let chunks = [];
