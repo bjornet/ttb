@@ -20,9 +20,6 @@ Visit [JIRA Developer Docs](https://developer.atlassian.com/cloud/jira/platform/
 
 ## Todo
 - [ ] Move TODO to my personal Notion
-- [ ] As a developer, I want to be able to paste the JIRA issue key in a lazy manner so that I don't have to match on the key exact.
-  - [ ] it should use a fuzzy search for the issue key
-  - [ ] it should be able to accept a URL where the issue key is in the URL
 - [ ] Rewrite in functional style
   - point free
   - curry
