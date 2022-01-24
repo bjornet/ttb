@@ -3,7 +3,7 @@ import { getCredentials } from '../credentials.js';
 import { print } from '../utils/print.js';
 
 let httpOpts = {
-  host: 'recose.atlassian.net',
+  host: null,
   port: 443,
   path: null,
   method: 'GET',
@@ -13,10 +13,12 @@ let httpOpts = {
 };
 
 export const setupJiraConnector = async (issueCode) => {
-  const { email, apiToken } = await getCredentials();
+  const { host, email, apiToken } = await getCredentials();
   /**
    * TODO: The getCredentials function will thorow if email or apiToken are not set... what do we have to do?
    */
+
+  httpOpts.host = host;
 
   httpOpts.headers = {
     ...httpOpts.headers,
@@ -25,7 +27,7 @@ export const setupJiraConnector = async (issueCode) => {
     ).toString('base64')}`,
   }
 
-  httpOpts.path = `/rest/api/2/issue/${issueCode}`;
+  httpOpts.path = `/rest/api/3/issue/${issueCode}`;
 }
 
 export const fetchJiraIssue = async () => {

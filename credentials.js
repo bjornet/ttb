@@ -14,7 +14,11 @@ const readCredentialsFile = async () => {
 };
 
 export const getCredentials = async () => {
-  const { email, apiToken } = await readCredentialsFile();
+  const { host, email, apiToken } = await readCredentialsFile();
+
+  if (!host) {
+    throw new Error('Could not find host');
+  }
 
   if (!email) {
     throw new Error('Could not find email');
@@ -24,5 +28,5 @@ export const getCredentials = async () => {
     throw new Error('Could not find apiToken');
   }
 
-  return { email, apiToken };
+  return { host, email, apiToken };
 };
