@@ -1,7 +1,12 @@
 #!/usr/bin/env node
-import { setupJiraConnector, fetchJiraIssue, isJiraCodeValid, getExtractJiraCode } from './jira/index.js';
-import { print } from './utils/index.js';
-import { checkoutGitBranch, generateGitBranchName, mapType} from './gitManager.js';
+import {
+  setupJiraConnector,
+  fetchJiraIssue,
+  isJiraCodeValid,
+  getExtractJiraCode
+} from './jira/index.js';
+import { print, compose } from './utils/index.js';
+import { checkoutGitBranch, composeGitBranchName, mapOverType} from './git/index.js';
 import { getHelpMessage, getUsageMessage, getMissingArugmentsMessage } from './messages.js';
 import { getArguments } from './arguments.js';
 
@@ -47,13 +52,13 @@ const App = async () => {
     }
   } = await fetchJiraIssue();
 
-  checkoutGitBranch(
-    generateGitBranchName({
-      summary,
-      type: type || mapType(jiraType) || default_type,
-      code: getExtractJiraCode(code),
-    })
-  );
+  const run = compose(checkoutGitBranch, composeGitBranchName);
+
+  run({
+    summary,
+    type: type || mapOverType(jiraType) || default_type,
+    code: getExtractJiraCode(code),
+  })
 };
 
 App();
