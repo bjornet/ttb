@@ -26,3 +26,5 @@ Visit [JIRA Developer Docs](https://developer.atlassian.com/cloud/jira/platform/
   - compose
 - [ ] Add tests
   - Install Jest
+- [ ] be able to handle a `;)` smiley at the end of a title
+  - [ ] related: handle space at end (need to trim)
