@@ -1,5 +1,5 @@
 import { graphql, GraphQlQueryResponseData } from "@octokit/graphql";
-import * as dotenv from 'dotenv';
+import * as dotenv from "dotenv";
 
 dotenv.config();
 
@@ -7,11 +7,14 @@ const config = {
   owner: process.env.GITHUB_OWNER,
   repo: process.env.GITHUB_REPO,
   token: process.env.GITHUB_TOKEN,
-}
+};
 
-type Request = (query: string, variables?: {
-  [key: string]: string | number | boolean;
-}) => Promise<GraphQlQueryResponseData>;
+type Request = (
+  query: string,
+  variables?: {
+    [key: string]: string | number | boolean;
+  }
+) => Promise<GraphQlQueryResponseData>;
 
 export const request: Request = async (query: string, variables) => {
   try {

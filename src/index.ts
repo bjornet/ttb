@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import { getBranchName } from "./branchName.js";
 import { getGitCheckoutBranchCommand } from "./git.js";
+import { init } from "./init.js";
 
 const program = new Command();
 
@@ -11,22 +12,13 @@ program
   .parse(process.argv);
 
 const main = async () => {
-  // const options = program.opts();
+  const options = program.opts();
   const args = program.args;
 
-  // kolla om credentials finns
-  // if (!credentials) {
-  // skapa credentials
-  // }
-  // if (credentials) {
-  // kolla om credentials är giltiga
-  // if (credentials är giltiga) {
-  // kör programmet
-  // }
-  // if (credentials inte är giltiga) {
-  // meddela att credentials inte är giltiga
-  // }
+  console.log("options", options);
+  console.log("args", args);
 
+  await init();
   /**
    * @todo validate args
    */
