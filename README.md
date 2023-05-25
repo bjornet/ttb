@@ -1,6 +1,7 @@
 # Ticket to Branch
 
 ## Requirements
+
 - Node v13.x or higher
 - An Personal API token
   - [JIRA](https://confluence.atlassian.com/enterprise/using-personal-access-tokens-1026032365.html)
@@ -11,16 +12,24 @@
 Add the following alias to your `.bashrc`
 
 ```sh
-alias ttb='node /<path>/<to>/ticket-to-branch/index.js'
+alias ttb='node /<path>/<to>/ticket-to-branch/dist/index.js'
 ```
 
 Type `ttb` in your terminal to start the program and help will be displayed.
 
+## Development
+
+1. `pnpm i`
+2. `pnpm run build`
+3. `pnpm run start`
+
 ## Tests
+
 - as of now REPL snippets are implemented `*.repl.spec.js`
   - run them with your favorite REPL, mine is the VS Code extension [JavaScript REPL](https://marketplace.visualstudio.com/items?itemName=achil.vscode-javascript-repl)
 
 ## Todo
+
 - [ ] Move all todos to Github issues for this repo
 - [ ] Rename repo from jirabranchcreator to ticket-to-branch
 - [ ] Add support for Github ticketing system
