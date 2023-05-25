@@ -1,15 +1,21 @@
 {
-  "name": "jirabranchcreator",
-  "version": "1.0.0",
+  "name": "ticket-to-branch",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "npx tsc -p tsconfig.json --noEmit false",
+    "start": "node ./dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "type": "module",
-  "dependencies": {
-    "yargs": "^17.3.0"
+  "devDependencies": {
+    "@octokit/graphql": "^5.0.6",
+    "@types/node": "^20.2.3",
+    "commander": "^10.0.1",
+    "dotenv": "^16.0.3",
+    "typescript": "^5.0.4"
   }
 }

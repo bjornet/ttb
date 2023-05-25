@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "importHelpers": true,
+    "module": "NodeNext",
+    "outDir": "dist",
+    "rootDir": "src",
+    "strict": true,
+    "target": "esnext",
+    "composite": true,
+    "typeRoots": ["node_modules/@types", "types"],
+    "moduleResolution": "NodeNext"
+  },
+  "include": ["src/**/*"]
+}
