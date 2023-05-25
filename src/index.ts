@@ -1,15 +1,30 @@
 import { Command } from "commander";
 import { getBranchName } from "./branchName.js";
 import { getGitCheckoutBranchCommand } from "./git.js";
-import { init } from "./init.js";
+import { init } from "./commands/init.js";
 
 const program = new Command();
 
-program
-  .option("--type", 'Optional "type of branch"')
-  // .option('--cheese <flavour>', 'cheese flavour', 'mozzarella')
-  // .option('--no-cheese', 'plain with no cheese')
-  .parse(process.argv);
+program.addHelpText(
+  "before",
+  `
+    🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫
+    🎫                    🎫 🎫
+    🎫                       🎫
+    🎫    Ticket to Branch   🎫
+    🎫                       🎫
+    🎫                       🎫
+    🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫
+`
+);
+
+program.option("--type", 'Optional "type of branch"');
+// .option('--cheese <flavour>', 'cheese flavour', 'mozzarella')
+// .option('--no-cheese', 'plain with no cheese')
+
+program.command("init").description("Set up Ticket to Branch").action(init);
+
+program.parse(process.argv);
 
 const main = async () => {
   const options = program.opts();
@@ -35,4 +50,4 @@ const main = async () => {
   console.log("---------------------------------------------");
 };
 
-main();
+// main();

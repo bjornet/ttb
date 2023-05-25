@@ -17,5 +17,8 @@
     "commander": "^10.0.1",
     "dotenv": "^16.0.3",
     "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "ora": "^6.3.1"
   }
 }
