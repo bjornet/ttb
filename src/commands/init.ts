@@ -32,5 +32,7 @@ export const init = async () => {
 
   await writeFile(configFullPath, exampleCredentialsString);
 
-  spinner.succeed("Config file created, now go add your credentials!");
+  spinner.succeed(
+    `Config file created at ${configFullPath}, now go add your credentials!`
+  );
 };

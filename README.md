@@ -16,6 +16,7 @@ alias ttb='node /<path>/<to>/ticket-to-branch/dist/index.js'
 ```
 
 Type `ttb` in your terminal to start the program and help will be displayed.
+Type `ttb init` to create a config file in your home directory.
 
 ## Development
 

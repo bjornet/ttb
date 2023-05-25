@@ -8,13 +8,13 @@ const program = new Command();
 program.addHelpText(
   "before",
   `
-    🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫
-    🎫                    🎫 🎫
-    🎫                       🎫
-    🎫    Ticket to Branch   🎫
-    🎫                       🎫
-    🎫                       🎫
-    🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫
+    🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫
+    🎫                        🎫
+    🎫                        🎫
+    🎫    Ticket to Branch    🎫
+    🎫                        🎫
+    🎫                        🎫
+    🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫
 `
 );
 
