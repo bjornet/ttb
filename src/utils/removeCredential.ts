@@ -2,10 +2,13 @@ import { Credential } from "../types/types.js";
 import { getConfig } from "./getConfig.js";
 import { updateFile } from "./updateFile.js";
 
-export const addCredential = async (credential: Credential) => {
+export const removeCredential = async (credential: string) => {
   const { credentials, credentialsPath } = await getConfig();
+  if (!credentials) {
+    return;
+  }
 
-  credentials && Object.assign(credentials, credential);
+  delete credentials[credential as keyof Credential];
 
   updateFile(credentialsPath, JSON.stringify(credentials));
 };

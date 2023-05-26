@@ -5,26 +5,28 @@ import ora from "ora";
 
 export const init = async () => {
   const spinner = ora("Initializing Ticket to Branch").start();
+  const emptyObject = JSON.stringify({});
 
-  const { configFullPath, configDirPath, configExists } = getConfig();
+  const { credentialsPath, configDirPath, configPath, credentialsExists } =
+    await getConfig();
 
-  if (configExists) {
+  if (credentialsExists) {
     spinner.succeed("Config file already exists.");
     spinner.info('If you would like to edit your config file, run "ttb add"');
     return;
   }
 
-  const credentialsString = JSON.stringify({});
   spinner.start("Creating config file");
 
   makeDir(configDirPath);
 
-  writeFile(configFullPath, credentialsString);
+  writeFile(credentialsPath, emptyObject);
+  writeFile(configPath, emptyObject);
 
   spinner.succeed(
-    `Config file created at ${configFullPath}, now go add your credentials!`
+    `Config file created at ${credentialsPath}, now go add your credentials!`
   );
   spinner.info(
-    `Run "ttb add" to add your credentials or edit your config file manually at ${configFullPath}'`
+    `Run "ttb add" to add your credentials or edit your config file manually at ${credentialsPath}'`
   );
 };

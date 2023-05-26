@@ -1,25 +1,25 @@
-import { writeFile } from "../utils/writeFile.js";
-import { makeDir } from "../utils/makeDir.js";
 import { getConfig } from "../utils/getConfig.js";
 import ora from "ora";
 import { select } from "../utils/questions/select.js";
 import { createGitHubCredential } from "../utils/createGitHubCredential.js";
 import { addCredential } from "../utils/addCredential.js";
+import { makeActive } from "../utils/makeActive.js";
 
 export const add = async () => {
   const spinner = ora("Add credential process started.").start();
 
-  const { configFullPath, configDirPath, configExists } = getConfig();
+  const { credentialsPath, credentialsExists } = await getConfig();
 
   let projectManagementSystem;
   let newCredential;
 
-  if (!configExists) {
+  if (!credentialsExists) {
     spinner.fail('You must run "ttb init" before you can add a credential.');
     return;
   }
 
   spinner.stop();
+
   projectManagementSystem = await select(
     "What project management system are you using?",
     ["GitHub", "Jira", "Trello"]
@@ -39,20 +39,16 @@ export const add = async () => {
     return;
   }
 
-  const exampleCredentials = {
-    projectName: {
-      host: "<your_host>",
-      email: "<user_email>",
-      apiToken: "<user_account_api_token>",
-    },
-  };
-
-  const credentialsString = JSON.stringify(newCredential || exampleCredentials);
-
   spinner.start("Editing config file");
 
-  addCredential(newCredential);
+  await addCredential(newCredential);
 
-  spinner.succeed(`Config file edited at ${configFullPath}`);
+  const { credentials } = await getConfig();
+
+  if (credentials && Object.keys(credentials).length === 1 && newCredential) {
+    makeActive(Object.keys(newCredential)[0]);
+  }
+
+  spinner.succeed(`Config file edited at ${credentialsPath}`);
   return;
 };

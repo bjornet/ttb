@@ -1,13 +1,17 @@
 import inquirer from "inquirer";
 
-export const select = async (message: string, choices: string[]) => {
+export const select = async (
+  message: string,
+  choices: string[],
+  preSelected?: string
+) => {
   const questions = [
     {
       type: "list",
       name: "value",
       message,
       choices,
-      default: choices[0],
+      default: preSelected ?? choices[0],
     },
   ];
 

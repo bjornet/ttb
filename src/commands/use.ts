@@ -1,25 +1,35 @@
 import ora from "ora";
 import { getConfig } from "../utils/getConfig.js";
 import { select } from "../utils/questions/select.js";
+import { makeActive } from "../utils/makeActive.js";
 
-export const use = async (args: string[]) => {
-  const { config } = getConfig();
+export const use = async () => {
+  const { credentials, activeCredential } = await getConfig();
   const spinner = ora();
-  if (!config) {
-    spinner.fail(
-      "No config file found. Run 'ttb init' to create a config file or 'ttb add' to add credentials."
-    );
-  }
-  const credentials = Object.keys(config);
 
-  const activeCredential = await select(
+  if (!credentials) {
+    spinner.fail(
+      "No config file found. Run 'ttb init' to create a config file."
+    );
+    return;
+  }
+
+  const _credentials = Object.keys(credentials);
+
+  if (_credentials.length === 0) {
+    spinner.fail(
+      "You have no credentials to use, add a credential by running 'ttb add'."
+    );
+    return;
+  }
+
+  const selectedCredential = await select(
     "Select the credential you want to use.",
-    credentials
+    _credentials,
+    activeCredential
   );
 
-  /**
-   * @todo save active credential so that it can be used in other commands
-   */
+  makeActive(selectedCredential.toString());
 
-  spinner.succeed(`Using ${activeCredential} as active credential.`);
+  spinner.succeed(`Using ${selectedCredential} as active credential.`);
 };

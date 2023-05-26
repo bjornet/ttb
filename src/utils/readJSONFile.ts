@@ -1,6 +1,10 @@
 import fs from "fs";
 
-export const readJSONFile = (path: string) => {
-  const file = JSON.parse(fs.readFileSync(path).toString());
-  return file;
+export const readJSONFile = async (path: string): Promise<any> => {
+  try {
+    const file = await JSON.parse(fs.readFileSync(path).toString());
+    return file;
+  } catch {
+    return null;
+  }
 };

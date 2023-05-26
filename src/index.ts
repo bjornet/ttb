@@ -4,6 +4,7 @@ import { getGitCheckoutBranchCommand } from "./git.js";
 import { init } from "./commands/init.js";
 import { add } from "./commands/add.js";
 import { use } from "./commands/use.js";
+import { remove } from "./commands/remove.js";
 
 const program = new Command();
 
@@ -21,12 +22,14 @@ program.addHelpText(
 );
 
 program.option("--type", 'Optional "type of branch"');
-// .option('--cheese <flavour>', 'cheese flavour', 'mozzarella')
-// .option('--no-cheese', 'plain with no cheese')
 
 program.command("init").description("Set up Ticket to Branch").action(init);
+
 program.command("add").description("Add a credential").action(add);
-program.command("use").description("Add a credential").action(use);
+
+program.command("use").description("Choose active credential").action(use);
+
+program.command("remove").description("Remove a credential").action(remove);
 
 program.parse(process.argv);
 
