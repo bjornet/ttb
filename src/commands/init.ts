@@ -1,38 +1,30 @@
-import os from "os";
 import { writeFile } from "../utils/writeFile.js";
 import { makeDir } from "../utils/makeDir.js";
-import { checkIfFileExists } from "../utils/checkIfFileExists.js";
 import { getConfig } from "../utils/getConfig.js";
 import ora from "ora";
 
 export const init = async () => {
   const spinner = ora("Initializing Ticket to Branch").start();
 
-  const { configFullPath, configDirPath } = await getConfig();
-  const configExists = await checkIfFileExists(configFullPath);
+  const { configFullPath, configDirPath, configExists } = getConfig();
 
   if (configExists) {
-    spinner.succeed("You are already set up!");
+    spinner.succeed("Config file already exists.");
+    spinner.info('If you would like to edit your config file, run "ttb add"');
     return;
   }
 
-  const exampleCredentials = {
-    projectName: {
-      host: "<your_host>.atlassian.net",
-      email: "<user_email>",
-      apiToken: "<user_account_api_token>",
-    },
-  };
-
-  const exampleCredentialsString = JSON.stringify(exampleCredentials);
-
+  const credentialsString = JSON.stringify({});
   spinner.start("Creating config file");
 
-  await makeDir(configDirPath);
+  makeDir(configDirPath);
 
-  await writeFile(configFullPath, exampleCredentialsString);
+  writeFile(configFullPath, credentialsString);
 
   spinner.succeed(
     `Config file created at ${configFullPath}, now go add your credentials!`
+  );
+  spinner.info(
+    `Run "ttb add" to add your credentials or edit your config file manually at ${configFullPath}'`
   );
 };

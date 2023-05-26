@@ -2,7 +2,7 @@ import { Command } from "commander";
 import { getBranchName } from "./branchName.js";
 import { getGitCheckoutBranchCommand } from "./git.js";
 import { init } from "./commands/init.js";
-
+import { add } from "./commands/add.js";
 const program = new Command();
 
 program.addHelpText(
@@ -23,6 +23,7 @@ program.option("--type", 'Optional "type of branch"');
 // .option('--no-cheese', 'plain with no cheese')
 
 program.command("init").description("Set up Ticket to Branch").action(init);
+program.command("add").description("Add a credential").action(add);
 
 program.parse(process.argv);
 

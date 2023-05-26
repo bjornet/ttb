@@ -13,12 +13,14 @@
   "type": "module",
   "devDependencies": {
     "@octokit/graphql": "^5.0.6",
+    "@types/inquirer": "^9.0.3",
     "@types/node": "^20.2.3",
     "commander": "^10.0.1",
     "dotenv": "^16.0.3",
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "inquirer": "^9.2.6",
     "ora": "^6.3.1"
   }
 }

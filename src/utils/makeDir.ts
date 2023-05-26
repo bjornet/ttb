@@ -1,8 +1,8 @@
 import fs from "fs";
 import { checkIfFileExists } from "./checkIfFileExists.js";
 
-export const makeDir = async (path: string) => {
-  const dirExists = await checkIfFileExists(path);
+export const makeDir = (path: string) => {
+  const dirExists = checkIfFileExists(path);
   if (dirExists) {
     return;
   }
