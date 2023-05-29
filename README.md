@@ -12,7 +12,7 @@
 Add the following alias to your `.bashrc`
 
 ```sh
-alias ttb='node /<path>/<to>/ticket-to-branch/dist/index.js'
+alias ttb='npm --prefix /<path>/<to>/ticket-to-branch run start'
 ```
 
 Type `ttb` in your terminal to start the program and help will be displayed.
