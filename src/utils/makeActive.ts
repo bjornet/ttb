@@ -1,7 +1,7 @@
 import { getConfig } from "./getConfig.js";
 import { updateFile } from "./updateFile.js";
 
-export const makeActive = async (credential: string) => {
+export const makeActive = async (credential: string): Promise<boolean> => {
   const { config, configPath } = await getConfig();
 
   const obj = {
@@ -10,5 +10,5 @@ export const makeActive = async (credential: string) => {
 
   config && Object.assign(config, obj);
 
-  updateFile(configPath, JSON.stringify(config));
+  return updateFile(configPath, JSON.stringify(config));
 };

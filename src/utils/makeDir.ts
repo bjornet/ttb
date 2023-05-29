@@ -1,10 +1,10 @@
 import fs from "fs";
-import { checkIfFileExists } from "./checkIfFileExists.js";
 
-export const makeDir = (path: string) => {
-  const dirExists = checkIfFileExists(path);
-  if (dirExists) {
-    return;
+export const makeDir = (path: string): boolean => {
+  try {
+    fs.mkdirSync(path);
+    return true;
+  } catch {
+    return false;
   }
-  fs.mkdirSync(path);
 };

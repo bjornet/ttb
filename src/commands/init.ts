@@ -1,32 +1,38 @@
-import { writeFile } from "../utils/writeFile.js";
-import { makeDir } from "../utils/makeDir.js";
+import { createConfig } from "../utils/createConfig.js";
 import { getConfig } from "../utils/getConfig.js";
 import ora from "ora";
 
 export const init = async () => {
   const spinner = ora("Initializing Ticket to Branch").start();
-  const emptyObject = JSON.stringify({});
 
-  const { credentialsPath, configDirPath, configPath, credentialsExists } =
-    await getConfig();
+  const {
+    credentialsPath,
 
-  if (credentialsExists) {
-    spinner.succeed("Config file already exists.");
-    spinner.info('If you would like to edit your config file, run "ttb add"');
+    configExists,
+    credentialsExists,
+  } = await getConfig();
+
+  if (credentialsExists && configExists) {
+    spinner.succeed("Config already set up.");
+    spinner.stopAndPersist({
+      symbol: "🎫",
+      text: 'If you would like to edit your config file, run "ttb add"',
+    });
     return;
   }
 
-  spinner.start("Creating config file");
+  const configCreated = await createConfig(spinner);
 
-  makeDir(configDirPath);
-
-  writeFile(credentialsPath, emptyObject);
-  writeFile(configPath, emptyObject);
+  if (!configCreated) {
+    spinner.fail("Config could not be created.");
+    return;
+  }
 
   spinner.succeed(
-    `Config file created at ${credentialsPath}, now go add your credentials!`
+    `Config set up at ${credentialsPath}, now go add your credentials!`
   );
-  spinner.info(
-    `Run "ttb add" to add your credentials or edit your config file manually at ${credentialsPath}'`
-  );
+  spinner.stopAndPersist({
+    symbol: "🎫",
+    text: `Run "ttb add" to add your credentials or edit your config file manually at ${credentialsPath}'`,
+  });
 };

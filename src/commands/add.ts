@@ -1,17 +1,21 @@
 import { getConfig } from "../utils/getConfig.js";
 import ora from "ora";
 import { select } from "../utils/questions/select.js";
-import { createGitHubCredential } from "../utils/createGitHubCredential.js";
 import { addCredential } from "../utils/addCredential.js";
 import { makeActive } from "../utils/makeActive.js";
+import { ProjectManagementSystems } from "../types/types.js";
+import { getNewCredential } from "../utils/getNewCredential.js";
 
 export const add = async () => {
   const spinner = ora("Add credential process started.").start();
 
   const { credentialsPath, credentialsExists } = await getConfig();
 
-  let projectManagementSystem;
-  let newCredential;
+  const projectManagementSystems: ProjectManagementSystems = [
+    "GitHub",
+    "Jira",
+    "Trello",
+  ];
 
   if (!credentialsExists) {
     spinner.fail('You must run "ttb init" before you can add a credential.');
@@ -20,33 +24,40 @@ export const add = async () => {
 
   spinner.stop();
 
-  projectManagementSystem = await select(
+  const selectedProjectManagementSystem = await select(
     "What project management system are you using?",
-    ["GitHub", "Jira", "Trello"]
+    projectManagementSystems
   );
 
-  if (projectManagementSystem && projectManagementSystem === "GitHub") {
-    newCredential = await createGitHubCredential();
-  }
+  const newCredential = await getNewCredential(
+    selectedProjectManagementSystem,
+    spinner
+  );
 
-  if (projectManagementSystem && projectManagementSystem === "Jira") {
-    spinner.fail("Jira is not yet supported");
-    return;
-  }
-
-  if (projectManagementSystem && projectManagementSystem === "Trello") {
-    spinner.fail("Trello is not yet supported");
+  if (!newCredential) {
     return;
   }
 
   spinner.start("Editing config file");
 
-  await addCredential(newCredential);
+  const credentialAdded = await addCredential(newCredential);
+
+  if (!credentialAdded) {
+    spinner.fail("Credential could not be added.");
+    return;
+  }
+
+  spinner.succeed("Credential added.");
 
   const { credentials } = await getConfig();
 
   if (credentials && Object.keys(credentials).length === 1 && newCredential) {
-    makeActive(Object.keys(newCredential)[0]);
+    const credentialActivated = await makeActive(Object.keys(newCredential)[0]);
+
+    if (!credentialActivated) {
+      spinner.fail("Credential could not be activated.");
+      return;
+    }
   }
 
   spinner.succeed(`Config file edited at ${credentialsPath}`);

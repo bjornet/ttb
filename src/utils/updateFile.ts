@@ -1,5 +1,10 @@
 import fs from "fs";
 
-export const updateFile = (path: string, data: string) => {
-  fs.writeFileSync(path, data);
+export const updateFile = (path: string, data: string): boolean => {
+  try {
+    fs.writeFileSync(path, data);
+    return true;
+  } catch {
+    return false;
+  }
 };

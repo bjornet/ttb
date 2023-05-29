@@ -2,13 +2,15 @@ import { Credential } from "../types/types.js";
 import { getConfig } from "./getConfig.js";
 import { updateFile } from "./updateFile.js";
 
-export const removeCredential = async (credential: string) => {
+export const removeCredential = async (
+  credential: string
+): Promise<boolean> => {
   const { credentials, credentialsPath } = await getConfig();
   if (!credentials) {
-    return;
+    return false;
   }
 
   delete credentials[credential as keyof Credential];
 
-  updateFile(credentialsPath, JSON.stringify(credentials));
+  return updateFile(credentialsPath, JSON.stringify(credentials));
 };

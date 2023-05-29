@@ -2,6 +2,7 @@ import os from "os";
 import { readJSONFile } from "./readJSONFile.js";
 import { checkIfFileExists } from "./checkIfFileExists.js";
 import { Config } from "../types/types.js";
+import { getActiveCredentialFromConfig } from "./getActiveCredentialFromConfig.js";
 
 export const getConfig = async () => {
   const homeDir = os.homedir();
@@ -13,11 +14,10 @@ export const getConfig = async () => {
   const credentialsPath = `${homeDir}/${dirName}/${credentialsFileName}`;
   const credentialsExists = checkIfFileExists(credentialsPath);
   const configExists = checkIfFileExists(configPath);
-  let activeCredential = "";
+  const configDirExists = checkIfFileExists(configDirPath);
   const config: Config | null = await readJSONFile(configPath);
-
-  if (config) activeCredential = config.activeCredential;
   const credentials: Credential[] | null = await readJSONFile(credentialsPath);
+  const activeCredential = getActiveCredentialFromConfig(config);
 
   return {
     activeCredential,
@@ -27,6 +27,7 @@ export const getConfig = async () => {
     config,
     configPath,
     configDirPath,
+    configDirExists,
     configExists,
   };
 };

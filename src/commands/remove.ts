@@ -28,6 +28,14 @@ export const remove = async () => {
     return;
   }
 
-  removeCredential(selectedCredential.toString());
+  const credentialRemoved = await removeCredential(
+    selectedCredential.toString()
+  );
+
+  if (!credentialRemoved) {
+    spinner.fail("Credential could not be removed.");
+    return;
+  }
+
   spinner.succeed(`Removed ${selectedCredential} from credentials.`);
 };

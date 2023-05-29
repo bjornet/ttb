@@ -11,3 +11,7 @@ export type Credential = GitHubCredential | undefined;
 export type Config = {
   activeCredential: string;
 };
+
+export type ProjectManagementSystems = ["GitHub", "Jira", "Trello"];
+
+export type ProjectManagementSystem = "GitHub" | "Jira" | "Trello";

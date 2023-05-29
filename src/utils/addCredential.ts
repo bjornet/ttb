@@ -2,10 +2,12 @@ import { Credential } from "../types/types.js";
 import { getConfig } from "./getConfig.js";
 import { updateFile } from "./updateFile.js";
 
-export const addCredential = async (credential: Credential) => {
+export const addCredential = async (
+  credential: Credential
+): Promise<boolean> => {
   const { credentials, credentialsPath } = await getConfig();
 
   credentials && Object.assign(credentials, credential);
 
-  updateFile(credentialsPath, JSON.stringify(credentials));
+  return updateFile(credentialsPath, JSON.stringify(credentials));
 };

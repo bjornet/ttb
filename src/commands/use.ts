@@ -29,7 +29,12 @@ export const use = async () => {
     activeCredential
   );
 
-  makeActive(selectedCredential.toString());
+  const credentialActivated = await makeActive(selectedCredential.toString());
 
-  spinner.succeed(`Using ${selectedCredential} as active credential.`);
+  if (!credentialActivated) {
+    spinner.fail("Credential could not be activated.");
+    return;
+  }
+
+  spinner.succeed(`Using "${selectedCredential}" as active credential.`);
 };
