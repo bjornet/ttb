@@ -1,33 +1,38 @@
-import { Command } from 'commander';
-import { getBranchName } from './branchName.js';
-import { getGitCheckoutBranchCommand } from './git.js';
+import { Command } from "commander";
+import { init } from "./commands/init.js";
+import { add } from "./commands/add.js";
+import { use } from "./commands/use.js";
+import { remove } from "./commands/remove.js";
+import { branch } from "./commands/branch.js";
 
 const program = new Command();
 
+program.addHelpText(
+  "before",
+  `
+    🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫
+    🎫                        🎫
+    🎫                        🎫
+    🎫    Ticket to Branch    🎫
+    🎫                        🎫
+    🎫                        🎫
+    🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫🎫
+`
+);
+
+program.command("init").description("Set up Ticket to Branch").action(init);
+
+program.command("add").description("Add a credential").action(add);
+
+program.command("use").description("Choose active credential").action(use);
+
+program.command("remove").description("Remove a credential").action(remove);
+
 program
-  .option('--type', 'Optional "type of branch"')
-  // .option('--cheese <flavour>', 'cheese flavour', 'mozzarella')
-  // .option('--no-cheese', 'plain with no cheese')
-  .parse(process.argv);
+  .command("branch")
+  .description("Create a branch")
+  .argument("<string>", "Ticket id")
+  .option("-t", "--type <string>", 'Optional "type of branch"')
+  .action((args, options) => branch(args, options));
 
-const main = async () => {
-  // const options = program.opts();
-  const args = program.args;
-
-  /**
-   * @todo validate args
-   */
-  const issueId = Number(args[0]);
-
-  const branchName = await getBranchName(issueId);
-
-  const gitCheckoutBranchCommand = getGitCheckoutBranchCommand(branchName);
-
-  console.log('---------------------------------------------')
-  console.log('---------Git Checkout Branch Command---------')
-  console.log(gitCheckoutBranchCommand)
-  console.log('---------------------------------------------')
-  console.log('---------------------------------------------')
-};
-
-main();
+program.parse(process.argv);

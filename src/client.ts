@@ -1,26 +1,28 @@
 import { graphql, GraphQlQueryResponseData } from "@octokit/graphql";
-import * as dotenv from 'dotenv';
+import { getConfig } from "./utils/getConfig.js";
 
-dotenv.config();
-
-const config = {
-  owner: process.env.GITHUB_OWNER,
-  repo: process.env.GITHUB_REPO,
-  token: process.env.GITHUB_TOKEN,
-}
-
-type Request = (query: string, variables?: {
-  [key: string]: string | number | boolean;
-}) => Promise<GraphQlQueryResponseData>;
+type Request = (
+  query: string,
+  variables?: {
+    [key: string]: string | number | boolean;
+  }
+) => Promise<GraphQlQueryResponseData | false>;
 
 export const request: Request = async (query: string, variables) => {
+  const { activeCredential } = await getConfig();
+
+  if (!activeCredential) {
+    console.log("No active credential found");
+    return Promise.resolve(false);
+  }
+
   try {
     const response: GraphQlQueryResponseData = await graphql({
       query,
-      owner: config.owner,
-      repo: config.repo,
+      owner: activeCredential.owner,
+      repo: activeCredential.repo,
       headers: {
-        authorization: `bearer ${config.token}`,
+        authorization: `bearer ${activeCredential.apiToken}`,
       },
       ...variables,
     });
