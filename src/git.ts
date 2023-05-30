@@ -6,6 +6,7 @@ export const getGitCheckoutBranchCommand = (branchName: string) =>
   `git checkout -b ${branchName}`;
 
 export const getHeadRef = async () => {
+  //TODO needs to cd into the project directory before running this command
   try {
     return await shellExec("git rev-parse HEAD");
   } catch (error) {
