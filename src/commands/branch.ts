@@ -1,6 +1,10 @@
 import ora from "ora";
 import { getBranchName } from "../branchName.js";
-import { getGitCheckoutBranchCommand } from "../git.js";
+import {
+  createLinkedBranch,
+  getGitCheckoutBranchCommand,
+  getHeadRef,
+} from "../git.js";
 
 export const branch = async (arg: string, options: any) => {
   const spinner = ora("Creating new branch from ticket ID.").start();
@@ -24,6 +28,28 @@ export const branch = async (arg: string, options: any) => {
   spinner.start("Checking out new branch.");
 
   const gitCheckoutBranchCommand = getGitCheckoutBranchCommand(branchName);
+
+  spinner.start("Get head branch.");
+
+  const headBranch = await getHeadRef();
+
+  if (!headBranch) {
+    spinner.fail("Head branch could not be retrieved.");
+    return;
+  }
+
+  const linkedBranch = await createLinkedBranch(issueId, headBranch.output);
+
+  if (!linkedBranch) {
+    spinner.fail("Linked branch could not be created.");
+    return;
+  }
+
+  console.log("linkedBranch: ", linkedBranch.ref.name);
+
+  spinner.succeed(`Linked branch created: ${linkedBranch.ref.name}`);
+
+  // spinner.succeed(`Head branch: ${headBranch.output}`);
 
   if (!gitCheckoutBranchCommand) {
     spinner.fail("Branch could not be checked out.");
