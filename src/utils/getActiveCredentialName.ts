@@ -1,8 +1,6 @@
 import { Config } from "../types/types.js";
 
-export const getActiveCredentialFromConfig = (
-  config: Config | null
-): string => {
+export const getActiveCredentialName = (config: Config | null): string => {
   if (config) {
     const activeCredential = config.activeCredential;
     return activeCredential;

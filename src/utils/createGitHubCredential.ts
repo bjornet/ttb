@@ -3,15 +3,15 @@ import { input } from "./questions/input.js";
 
 export const createGitHubCredential = async (): Promise<GitHubCredential> => {
   const userProjectName = await input("What is your project name?");
-  const userHost = await input("What is your host?");
-  const userEmail = await input("What is your email?");
-  const userApiToken = await input("What is your API token?");
+  const owner = await input("What is the name of the owner of the repository?");
+  const repo = await input("What is the name of the repository?");
+  const apiToken = await input("What is your personal access token?");
 
   return {
     [userProjectName]: {
-      host: userHost,
-      email: userEmail,
-      apiToken: userApiToken,
+      owner,
+      repo,
+      apiToken,
     },
   };
 };

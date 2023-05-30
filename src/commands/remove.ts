@@ -4,7 +4,7 @@ import { select } from "../utils/questions/select.js";
 import { removeCredential } from "../utils/removeCredential.js";
 
 export const remove = async () => {
-  const { activeCredential, credentials } = await getConfig();
+  const { activeCredentialName, credentials } = await getConfig();
   const spinner = ora();
 
   if (!credentials) {
@@ -21,7 +21,7 @@ export const remove = async () => {
     _credentials
   );
 
-  if (selectedCredential === activeCredential) {
+  if (selectedCredential === activeCredentialName) {
     spinner.fail(
       "You cannot remove your active credential. Please use 'ttb use' to change your active credential."
     );

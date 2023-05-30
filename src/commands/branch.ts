@@ -1,14 +1,11 @@
 import { getBranchName } from "../branchName.js";
 import { getGitCheckoutBranchCommand } from "../git.js";
 
-export const branch = async (args: any, options: any) => {
-  console.log("args", args);
-  console.log("options", options);
-
+export const branch = async (arg: string, options: any) => {
   /**
    * @todo validate args
    */
-  const issueId = Number(args[0]);
+  const issueId = Number(arg);
 
   const branchName = await getBranchName(issueId);
 

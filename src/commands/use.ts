@@ -4,7 +4,7 @@ import { select } from "../utils/questions/select.js";
 import { makeActive } from "../utils/makeActive.js";
 
 export const use = async () => {
-  const { credentials, activeCredential } = await getConfig();
+  const { credentials, activeCredentialName } = await getConfig();
   const spinner = ora();
 
   if (!credentials) {
@@ -26,7 +26,7 @@ export const use = async () => {
   const selectedCredential = await select(
     "Select the credential you want to use.",
     _credentials,
-    activeCredential
+    activeCredentialName
   );
 
   const credentialActivated = await makeActive(selectedCredential.toString());
