@@ -6,14 +6,14 @@ type Request = (
   variables?: {
     [key: string]: string | number | boolean;
   }
-) => Promise<GraphQlQueryResponseData | false>;
+) => Promise<GraphQlQueryResponseData | null>;
 
 export const request: Request = async (query: string, variables) => {
   const { activeCredential } = await getConfig();
 
   if (!activeCredential) {
     console.log("No active credential found");
-    return Promise.resolve(false);
+    return null;
   }
 
   try {
@@ -30,7 +30,6 @@ export const request: Request = async (query: string, variables) => {
     return response;
   } catch (error) {
     console.log(error);
+    return null;
   }
-
-  return new Promise((resolve) => resolve([]));
 };

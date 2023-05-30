@@ -6,7 +6,7 @@ export const getLastIssues = async () => {
   const response = await request(LastIssues);
 
   if (!response) {
-    return [];
+    return null;
   }
 
   return response.repository.issues.edges;
@@ -16,7 +16,7 @@ export const fetchIssueById = async (id: number) => {
   const response = await request(IssueById, { id });
 
   if (!response) {
-    return [];
+    return null;
   }
 
   return response.repository.issue;

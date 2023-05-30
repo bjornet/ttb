@@ -1,9 +1,8 @@
 import { fetchIssueById } from "./issues.js";
+import { MakeBranchName } from "./types/types.js";
 import { kebabCase } from "./utils/kebabCase.js";
 
 const DEFAULT_TYPE = "feature";
-
-let type = DEFAULT_TYPE;
 
 const getType = (labelNodes: string[]) => {
   /**
@@ -23,24 +22,26 @@ const getType = (labelNodes: string[]) => {
   return DEFAULT_TYPE;
 };
 
-type Issue = {
-  title: string;
-  number: number;
-  labels: {
-    nodes: string[];
-  };
-};
-
-type MakeBranchName = (issue: Issue ) => Promise<string>;
-
-const makeBranchName: MakeBranchName = async ({ title, number, labels }) => {
+const makeBranchName: MakeBranchName = ({ title, number, labels }) => {
   const type = getType(labels.nodes);
 
-  return `${type}/${number}-${kebabCase(title)}`;
+  const branchName = `${type}/${number}-${kebabCase(title)}`;
+
+  return branchName;
 };
 
 export const getBranchName = async (id: number) => {
   const issue = await fetchIssueById(id);
 
-  return makeBranchName(issue);
+  if (!issue) {
+    return null;
+  }
+
+  const branchName = makeBranchName(issue);
+
+  if (!branchName) {
+    return null;
+  }
+
+  return branchName;
 };
