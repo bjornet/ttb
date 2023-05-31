@@ -30,12 +30,14 @@ const makeBranchName: MakeBranchName = ({ title, number, labels }) => {
   return branchName;
 };
 
-export const getBranchName = async (id: number) => {
-  const issue = await fetchIssueById(id);
+export const getBranchName = async (issueNumber: number) => {
+  const issue = await fetchIssueById(issueNumber);
 
   if (!issue) {
     return null;
   }
+
+  const issueId = issue.id;
 
   const branchName = makeBranchName(issue);
 
@@ -43,5 +45,5 @@ export const getBranchName = async (id: number) => {
     return null;
   }
 
-  return branchName;
+  return { branchName, issueId };
 };

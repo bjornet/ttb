@@ -3,10 +3,27 @@ import { CreateLinkedBranch } from "./graphql/CreateLinkedBranch.js";
 import { shellExec } from "./utils/execProcess.js";
 
 export const getGitCheckoutBranchCommand = (branchName: string) =>
-  `git checkout -b ${branchName}`;
+  `git checkout ${branchName}`;
+
+export const gitPull = async () => {
+  try {
+    return await shellExec("git pull");
+  } catch (error) {
+    console.log("error: ", error);
+    return null;
+  }
+};
+
+export const checkoutBranch = async (branchName: string) => {
+  try {
+    return await shellExec(getGitCheckoutBranchCommand(branchName));
+  } catch (error) {
+    console.log("error: ", error);
+    return null;
+  }
+};
 
 export const getHeadRef = async () => {
-  //TODO needs to cd into the project directory before running this command
   try {
     return await shellExec("git rev-parse HEAD");
   } catch (error) {
@@ -17,18 +34,20 @@ export const getHeadRef = async () => {
 
 export const createLinkedBranch = async (
   issueId: number,
-  fromBranchSHA: string
+  fromBranchSHA: string,
+  name: string
 ) => {
   const trimmedFromBranchSHA = fromBranchSHA.trim();
 
   const response = await request(CreateLinkedBranch, {
     issueId,
-    trimmedFromBranchSHA,
+    sha: trimmedFromBranchSHA,
+    name,
   });
 
   if (!response) {
     return null;
   }
 
-  return response;
+  return response.createLinkedBranch.linkedBranch.ref.name;
 };

@@ -1,9 +1,10 @@
 import ora from "ora";
 import { getBranchName } from "../branchName.js";
 import {
+  checkoutBranch,
   createLinkedBranch,
-  getGitCheckoutBranchCommand,
   getHeadRef,
+  gitPull,
 } from "../git.js";
 
 export const branch = async (arg: string, options: any) => {
@@ -12,22 +13,20 @@ export const branch = async (arg: string, options: any) => {
   /**
    * @todo validate args
    */
-  const issueId = Number(arg);
+  const issueNumber = Number(arg);
 
   spinner.start("Creating branch name.");
 
-  const branchName = await getBranchName(issueId);
+  const branch = await getBranchName(issueNumber);
 
-  if (!branchName) {
+  if (!branch) {
     spinner.fail("Branch name could not be created.");
     return;
   }
 
+  const { branchName, issueId } = branch;
+
   spinner.succeed("Branch name created.");
-
-  spinner.start("Checking out new branch.");
-
-  const gitCheckoutBranchCommand = getGitCheckoutBranchCommand(branchName);
 
   spinner.start("Get head branch.");
 
@@ -38,28 +37,31 @@ export const branch = async (arg: string, options: any) => {
     return;
   }
 
-  const linkedBranch = await createLinkedBranch(issueId, headBranch.output);
+  const linkedBranch = await createLinkedBranch(
+    issueId,
+    headBranch.output,
+    branchName
+  );
 
   if (!linkedBranch) {
     spinner.fail("Linked branch could not be created.");
     return;
   }
 
-  console.log("linkedBranch: ", linkedBranch.ref.name);
+  spinner.succeed(`Linked branch created: ${linkedBranch}`);
 
-  spinner.succeed(`Linked branch created: ${linkedBranch.ref.name}`);
+  const gitPulled = await gitPull();
 
-  // spinner.succeed(`Head branch: ${headBranch.output}`);
-
-  if (!gitCheckoutBranchCommand) {
-    spinner.fail("Branch could not be checked out.");
+  if (!gitPulled) {
+    spinner.fail("Git pull failed.");
     return;
   }
 
-  spinner.succeed("Branch checked out.");
+  const branchCheckedOut = await checkoutBranch(linkedBranch);
 
-  console.log(
-    "gitCheckoutBranchCommand should check run this command: ",
-    gitCheckoutBranchCommand
-  );
+  if (!branchCheckedOut) {
+    spinner.fail("Branch could not be checked out.");
+  }
+
+  spinner.succeed(`Checked out to: ${branchName}`);
 };
