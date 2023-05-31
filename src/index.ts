@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 import { Command } from "commander";
-import { init } from "./commands/init.js";
-import { add } from "./commands/add.js";
-import { use } from "./commands/use.js";
-import { remove } from "./commands/remove.js";
-import { branch } from "./commands/branch.js";
+import { init } from "./modules/commands/init.js";
+import { add } from "./modules/commands/add.js";
+import { use } from "./modules/commands/use.js";
+import { remove } from "./modules/commands/remove.js";
+import { branch } from "./modules/commands/branch.js";
 
 const program = new Command();
 

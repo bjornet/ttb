@@ -1,6 +1,6 @@
-import { Credential } from "../types/types.js";
+import { Credential } from "../../types/types.js";
 import { getConfig } from "./getConfig.js";
-import { updateFile } from "./updateFile.js";
+import { updateFile } from "../../utils/updateFile.js";
 
 export const removeCredential = async (
   credential: string

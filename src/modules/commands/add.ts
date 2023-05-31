@@ -1,10 +1,10 @@
-import { getConfig } from "../utils/getConfig.js";
+import { getConfig } from "../config/getConfig.js";
 import ora from "ora";
-import { select } from "../utils/questions/select.js";
-import { addCredential } from "../utils/addCredential.js";
-import { makeActive } from "../utils/makeActive.js";
-import { ProjectManagementSystems } from "../types/types.js";
-import { getNewCredential } from "../utils/getNewCredential.js";
+import { select } from "../questions/select.js";
+import { addCredential } from "../config/addCredential.js";
+import { makeActive } from "../config/makeActive.js";
+import { ProjectManagementSystems } from "../../types/types.js";
+import { getNewCredential } from "../config/getNewCredential.js";
 
 export const add = async () => {
   const spinner = ora("Add credential process started.").start();

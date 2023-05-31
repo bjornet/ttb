@@ -10,8 +10,18 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "composite": true,
-    "typeRoots": ["node_modules/@types", "types"]
-    // "moduleResolution": "NodeNext"
+    "typeRoots": ["node_modules/@types", "types"],
+    "baseUrl": ".",
+    "paths": {
+      "types/*": ["types/*"],
+      "utils/*": ["utils/*"],
+      "modules/*": ["modules/*"],
+      "api/*": ["modules/api/*"],
+      "config/*": ["modules/config/*"],
+      "commands/*": ["modules/commands/*"],
+      "git/*": ["modules/git/*"],
+      "questions/*": ["modules/questions/*"]
+    }
   },
   "include": ["src/**/*"]
 }

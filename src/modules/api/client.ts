@@ -1,5 +1,5 @@
 import { graphql, GraphQlQueryResponseData } from "@octokit/graphql";
-import { getConfig } from "./utils/getConfig.js";
+import { getConfig } from "../config/getConfig.js";
 
 type Request = (
   query: string,

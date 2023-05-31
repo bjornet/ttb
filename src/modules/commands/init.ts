@@ -1,5 +1,5 @@
-import { createConfig } from "../utils/createConfig.js";
-import { getConfig } from "../utils/getConfig.js";
+import { createConfig } from "../config/createConfig.js";
+import { getConfig } from "../config/getConfig.js";
 import ora from "ora";
 
 export const init = async () => {

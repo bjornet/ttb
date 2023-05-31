@@ -1,11 +1,9 @@
 import ora from "ora";
-import { getBranchName } from "../branchName.js";
-import {
-  checkoutBranch,
-  createLinkedBranch,
-  getHeadRef,
-  gitPull,
-} from "../git.js";
+import { getBranchName } from "../git/branchName.js";
+import { createLinkedBranch } from "../api/github/createLinkedBranch.js";
+import { getHeadRef } from "../git/getHeadRef.js";
+import { gitPull } from "../git/gitPull.js";
+import { checkoutBranch } from "../git/checkoutBranch.js";
 
 export const branch = async (arg: string, options: any) => {
   const spinner = ora("Creating new branch from ticket ID.").start();

@@ -1,6 +1,6 @@
-import { fetchIssueById } from "./issues.js";
-import { MakeBranchName } from "./types/types.js";
-import { kebabCase } from "./utils/kebabCase.js";
+import { fetchIssueById } from "../api/github/issues.js";
+import { MakeBranchName } from "../../types/types.js";
+import { kebabCase } from "../../utils/kebabCase.js";
 
 const DEFAULT_TYPE = "feature";
 

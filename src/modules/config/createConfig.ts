@@ -1,7 +1,7 @@
 import { Ora } from "ora";
 import { getConfig } from "./getConfig.js";
-import { writeFile } from "./writeFile.js";
-import { makeDir } from "./makeDir.js";
+import { writeFile } from "../../utils/writeFile.js";
+import { makeDir } from "../../utils/makeDir.js";
 
 export const createConfig = async (spinner: Ora): Promise<boolean> => {
   const emptyObject = JSON.stringify({});

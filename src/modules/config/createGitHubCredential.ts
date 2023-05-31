@@ -1,5 +1,5 @@
-import { GitHubCredential } from "../types/types.js";
-import { input } from "./questions/input.js";
+import { GitHubCredential } from "../../types/types.js";
+import { input } from "../questions/input.js";
 
 export const createGitHubCredential = async (): Promise<GitHubCredential> => {
   const userProjectName = await input("What is your project name?");
