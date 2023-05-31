@@ -1,7 +1,7 @@
 import ora from "ora";
-import { getConfig } from "../utils/getConfig.js";
-import { select } from "../utils/questions/select.js";
-import { removeCredential } from "../utils/removeCredential.js";
+import { getConfig } from "../config/getConfig.js";
+import { select } from "../questions/select.js";
+import { removeCredential } from "../config/removeCredential.js";
 
 export const remove = async () => {
   const { activeCredentialName, credentials } = await getConfig();

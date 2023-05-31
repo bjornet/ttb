@@ -1,5 +1,5 @@
 import { getConfig } from "./getConfig.js";
-import { updateFile } from "./updateFile.js";
+import { updateFile } from "../../utils/updateFile.js";
 
 export const makeActive = async (credential: string): Promise<boolean> => {
   const { config, configPath } = await getConfig();

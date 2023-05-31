@@ -2,7 +2,10 @@
   "name": "ticket-to-branch",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "bin": {
+    "ttb": "./dist/index.js"
+  },
   "scripts": {
     "build": "npx tsc -p tsconfig.json --noEmit false",
     "start": "node ./dist/index.js",
@@ -12,14 +15,13 @@
   "license": "ISC",
   "type": "module",
   "devDependencies": {
-    "@octokit/graphql": "^5.0.6",
     "@types/inquirer": "^9.0.3",
     "@types/node": "^20.2.3",
-    "commander": "^10.0.1",
-    "dotenv": "^16.0.3",
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "@octokit/graphql": "^5.0.6",
+    "commander": "^10.0.1",
     "inquirer": "^9.2.6",
     "ora": "^6.3.1"
   }

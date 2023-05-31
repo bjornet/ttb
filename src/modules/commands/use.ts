@@ -1,7 +1,7 @@
 import ora from "ora";
-import { getConfig } from "../utils/getConfig.js";
-import { select } from "../utils/questions/select.js";
-import { makeActive } from "../utils/makeActive.js";
+import { getConfig } from "../config/getConfig.js";
+import { select } from "../questions/select.js";
+import { makeActive } from "../config/makeActive.js";
 
 export const use = async () => {
   const { credentials, activeCredentialName } = await getConfig();

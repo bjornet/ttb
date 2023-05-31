@@ -1,4 +1,4 @@
-import { Credential } from "../types/types.js";
+import { Credential } from "../../types/types.js";
 
 export const getActiveCredential = (
   activeCredentialName: string,

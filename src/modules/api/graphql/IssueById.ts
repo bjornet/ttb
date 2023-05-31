@@ -4,6 +4,7 @@ export const IssueById = `
       issue(number:$id) {
         title
         number
+        id
         labels(first: 100) {
           nodes {
             name

@@ -1,7 +1,7 @@
 import os from "os";
-import { readJSONFile } from "./readJSONFile.js";
-import { checkIfFileExists } from "./checkIfFileExists.js";
-import { Config } from "../types/types.js";
+import { readJSONFile } from "../../utils/readJSONFile.js";
+import { checkIfFileExists } from "../../utils/checkIfFileExists.js";
+import { Config } from "../../types/types.js";
 import { getActiveCredentialName } from "./getActiveCredentialName.js";
 import { getActiveCredential } from "./getActiveCredential.js";
 

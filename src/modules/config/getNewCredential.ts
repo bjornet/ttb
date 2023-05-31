@@ -1,5 +1,5 @@
 import { Ora } from "ora";
-import { Credential, ProjectManagementSystem } from "../types/types.js";
+import { Credential, ProjectManagementSystem } from "../../types/types.js";
 import { createGitHubCredential } from "./createGitHubCredential.js";
 
 export const getNewCredential = async (
