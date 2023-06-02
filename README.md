@@ -24,6 +24,10 @@ Type `ttb init` to create a config file in your home directory.
 2. `pnpm run build`
 3. `pnpm run start`
 
+## Notes
+
+- note that options are not working properly when running `pnpm run start`
+
 ## Tests
 
 - as of now REPL snippets are implemented `*.repl.spec.js`

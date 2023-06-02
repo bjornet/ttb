@@ -27,9 +27,6 @@ export type ProjectManagementSystem = "GitHub" | "Jira" | "Trello";
 export type Issue = {
   title: string;
   number: number;
-  labels: {
-    nodes: string[];
-  };
 };
 
-export type MakeBranchName = (issue: Issue) => string;
+export type MakeBranchName = (issue: Issue, type: string) => string;
