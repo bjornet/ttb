@@ -1,4 +1,6 @@
-# Ticket to Branch
+# ttb
+
+A CLI tool to create a new branch from a ticket number in your project management tool.
 
 ## Requirements
 
@@ -9,31 +11,55 @@
 
 ## Usage
 
-Add the following alias to your `.bashrc`
+### Installation
 
 ```sh
-alias ttb='npm --prefix /<path>/<to>/ticket-to-branch run start'
+npm i -g ttb
 ```
 
-Type `ttb` in your terminal to start the program and help will be displayed.
-Type `ttb init` to create a config file in your home directory.
+### Setup
+
+```sh
+ttb init
+ttb add
+```
+
+### Branching
+
+Go to your project directory and run
+
+```sh
+ttb branch <ticket-number>
+```
+
+### Commands
+
+- `init` - create a config file in your user directory.
+- `add` - add a new credential. (Will be set to active if no other credentials exist)
+- `remove` - remove a credential.
+- `use` - set a credential to active. (This will be the credential used for the `branch` command)
+- `branch <ticket-number>` - create a new branch.
+
+## Current Support
+
+- Github
+
+## Future
+
+Jira support is soon in progress. The goal is to be able to create a branch from a ticket number. The branch name will be the ticket number and the title of the ticket. The ticket number will be prepended with the ticket type. For example, `feature/ttb-1234-this-is-the-title-of-the-ticket`.
 
 ## Development
 
 1. `pnpm i`
 2. `pnpm run build`
-3. `pnpm run start`
+3. `pnpm run start <command>`
 
-## Tests
+### Notes
 
-- as of now REPL snippets are implemented `*.repl.spec.js`
-  - run them with your favorite REPL, mine is the VS Code extension [JavaScript REPL](https://marketplace.visualstudio.com/items?itemName=achil.vscode-javascript-repl)
+- note that options are not working properly when running `pnpm run start`
 
-## Todo
+## Sponsors
 
-- [ ] Move all todos to Github issues for this repo
-- [ ] Rename repo from jirabranchcreator to ticket-to-branch
-- [ ] Add support for Github ticketing system
-- [ ] Write tests
-  - Install Jest (https://jestjs.io/)
-- [ ] Install and setup ESLint (https://eslint.org/)
+<a href="https://www.osynlig.se/">
+  <img src="https://avatars.githubusercontent.com/u/9366696?s=200&v=4" alt="Osynlig AB" width="200" />
+</a>
