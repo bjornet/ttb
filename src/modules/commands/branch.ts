@@ -15,7 +15,7 @@ export const branch = async (arg: string, options: any) => {
 
   spinner.start("Creating branch name.");
 
-  const branch = await getBranchName(issueNumber);
+  const branch = await getBranchName(issueNumber, options.type);
 
   if (!branch) {
     spinner.fail("Branch name could not be created.");

@@ -32,8 +32,8 @@ program.command("remove").description("Remove a credential").action(remove);
 program
   .command("branch")
   .description("Create a branch")
-  .argument("<string>", "Ticket id")
-  .option("-t", "--type <string>", 'Optional "type of branch"')
-  .action((args, options) => branch(args, options));
+  .argument("<ticket-id>", "ticket id to create branch from")
+  .option("--type <type>", "type of branch", "feature")
+  .action((args, option) => branch(args, option));
 
 program.parse(process.argv);

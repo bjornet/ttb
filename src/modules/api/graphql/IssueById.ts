@@ -5,11 +5,6 @@ export const IssueById = `
         title
         number
         id
-        labels(first: 100) {
-          nodes {
-            name
-          }
-        }
       }
     }
   }

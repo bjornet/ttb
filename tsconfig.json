@@ -12,6 +12,7 @@
     "composite": true,
     "typeRoots": ["node_modules/@types", "types"],
     "baseUrl": ".",
+    "moduleResolution": "NodeNext",
     "paths": {
       "types/*": ["types/*"],
       "utils/*": ["utils/*"],
