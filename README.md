@@ -46,7 +46,7 @@ ttb branch <ticket-number>
 
 ## Future
 
-Jira support is soon in progress. The goal is to be able to create a branch from a ticket number. The branch name will be the ticket number and the title of the ticket. The ticket number will be prepended with the ticket type. For example, `feature/TTB-1234-This is the title of the ticket`.
+Jira support is soon in progress. The goal is to be able to create a branch from a ticket number. The branch name will be the ticket number and the title of the ticket. The ticket number will be prepended with the ticket type. For example, `feature/ttb-1234-this-is-the-title-of-the-ticket`.
 
 ## Development
 
