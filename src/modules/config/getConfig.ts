@@ -1,7 +1,7 @@
 import os from "os";
 import { readJSONFile } from "../../utils/readJSONFile.js";
 import { checkIfFileExists } from "../../utils/checkIfFileExists.js";
-import { Config } from "../../types/types.js";
+import { Config, Credential } from "../../types/types.js";
 import { getActiveCredentialName } from "./getActiveCredentialName.js";
 import { getActiveCredential } from "./getActiveCredential.js";
 
@@ -17,7 +17,7 @@ export const getConfig = async () => {
   const configExists = checkIfFileExists(configPath);
   const configDirExists = checkIfFileExists(configDirPath);
   const config: Config | null = await readJSONFile(configPath);
-  const credentials: Credential[] | null = await readJSONFile(credentialsPath);
+  const credentials: Credential | null = await readJSONFile(credentialsPath);
   const activeCredentialName = getActiveCredentialName(config);
   const activeCredential = getActiveCredential(
     activeCredentialName,
