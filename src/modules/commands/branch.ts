@@ -4,6 +4,7 @@ import { createLinkedBranch } from "../api/github/createLinkedBranch.js";
 import { getHeadRef } from "../git/getHeadRef.js";
 import { gitPull } from "../git/gitPull.js";
 import { checkoutBranch } from "../git/checkoutBranch.js";
+import { createLocalBranch } from "../git/createLocalBranch.js";
 
 export const branch = async (arg: string, options: any) => {
   const spinner = ora("Creating new branch from ticket ID.").start();
@@ -42,7 +43,20 @@ export const branch = async (arg: string, options: any) => {
   );
 
   if (!linkedBranch) {
-    spinner.fail("Linked branch could not be created.");
+    spinner.fail(
+      "Linked branch could not be created. You probably need to ask the repository owner for permissions."
+    );
+
+    spinner.start("Creating local branch instead");
+
+    const newLocalBranch = await createLocalBranch(branchName);
+
+    if (!newLocalBranch) {
+      spinner.fail("Local branch could not be created");
+      return;
+    }
+
+    spinner.succeed(`Checked out to local branch: ${branchName}`);
     return;
   }
 
