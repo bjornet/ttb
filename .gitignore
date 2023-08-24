@@ -107,3 +107,6 @@ dist
 credentials.json*
 
 .DS_Store
+
+# VSCode
+.vscode/
