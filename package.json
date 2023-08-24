@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/bjornet/ttb.git"
   },
-  "homepage": "https://github.com/bjornet/ttb#readme",
+  "homepage": "https://github.com/bjornet/ttb/tree/main#readme",
   "main": "./dist/index.js",
   "bin": {
     "ttb": "./dist/index.js"
