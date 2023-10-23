@@ -8,9 +8,9 @@ export const checkIfBranchExists = async (
 ) => {
   const branch = await getBranch(repoName, repoOwner, branchName);
 
-  if (branch) {
-    return true;
+  if (!branch) {
+    return false;
   }
 
-  return false;
+  return true;
 };
