@@ -1,5 +1,4 @@
-import fs from "fs";
-import { checkIfFileExists } from "./checkIfFileExists.js";
+import fs from 'fs';
 
 export const writeFile = (path: string, data: string): boolean => {
   try {

@@ -1,5 +1,4 @@
-import { getBranch } from "../api/github/getBranch.js";
-import { getConfig } from "../config/getConfig.js";
+import { getBranch } from '../api/github/getBranch.js';
 
 export const checkIfBranchExists = async (
   repoName: string,
