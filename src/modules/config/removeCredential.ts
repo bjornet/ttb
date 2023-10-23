@@ -10,7 +10,7 @@ export const removeCredential = async (
     return false;
   }
 
-  delete credentials[credential as keyof Credential];
+  delete credentials[credential];
 
   return updateFile(credentialsPath, JSON.stringify(credentials));
 };

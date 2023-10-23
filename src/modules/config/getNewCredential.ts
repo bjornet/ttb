@@ -1,13 +1,13 @@
 import { Ora } from "ora";
 import { Credential, ProjectManagementSystem } from "../../types/types.js";
-import { createGitHubCredential } from "./createGitHubCredential.js";
+import { createCredential } from "./createCredential.js";
 
 export const getNewCredential = async (
   projectManagementSystem: ProjectManagementSystem,
   spinner: Ora
 ): Promise<Credential | false> => {
   if (projectManagementSystem === "GitHub") {
-    return await createGitHubCredential();
+    return await createCredential();
   }
 
   if (projectManagementSystem === "Jira") {
@@ -19,4 +19,6 @@ export const getNewCredential = async (
     spinner.fail("Trello is not yet supported");
     return false;
   }
+
+  return false;
 };

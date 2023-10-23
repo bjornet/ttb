@@ -4,9 +4,19 @@ import { createLinkedBranch } from "../api/github/createLinkedBranch.js";
 import { getHeadRef } from "../git/getHeadRef.js";
 import { gitPull } from "../git/gitPull.js";
 import { checkoutBranch } from "../git/checkoutBranch.js";
+import { createLocalBranch } from "../git/createLocalBranch.js";
+import { checkIfBranchExists } from "../git/checkIfBranchExists.js";
+import { getConfig } from "../config/getConfig.js";
 
 export const branch = async (arg: string, options: any) => {
   const spinner = ora("Creating new branch from ticket ID.").start();
+
+  const { activeCredential } = await getConfig();
+
+  if (!activeCredential) {
+    spinner.fail("No active credential.");
+    return;
+  }
 
   /**
    * @todo validate args
@@ -35,6 +45,17 @@ export const branch = async (arg: string, options: any) => {
     return;
   }
 
+  const branchExists = await checkIfBranchExists(
+    activeCredential.repo,
+    activeCredential.owner,
+    branchName
+  );
+
+  if (branchExists) {
+    spinner.fail("Branch already exists.");
+    return;
+  }
+
   const linkedBranch = await createLinkedBranch(
     issueId,
     headBranch.output,
@@ -43,6 +64,17 @@ export const branch = async (arg: string, options: any) => {
 
   if (!linkedBranch) {
     spinner.fail("Linked branch could not be created.");
+
+    spinner.start("Creating local branch instead");
+
+    const newLocalBranch = await createLocalBranch(branchName);
+
+    if (!newLocalBranch) {
+      spinner.fail("Local branch could not be created");
+      return;
+    }
+
+    spinner.succeed(`Checked out to local branch: ${branchName}`);
     return;
   }
 
