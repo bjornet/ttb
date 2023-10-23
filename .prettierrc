@@ -1,0 +1,16 @@
+{
+  "printWidth": 100,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "proseWrap": "always",
+  "arrowParens": "always",
+  "overrides": [
+    {
+      "files": ["*.md", "next.config.js"],
+      "options": {
+        "printWidth": 9999
+      }
+    }
+  ]
+}

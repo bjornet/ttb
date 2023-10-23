@@ -1,8 +1,6 @@
-import { fetchIssueById } from "../api/github/issues.js";
-import { MakeBranchName } from "../../types/types.js";
-import { kebabCase } from "../../utils/kebabCase.js";
-
-const DEFAULT_TYPE = "feature";
+import { fetchIssueById } from '../api/github/issues.js';
+import { MakeBranchName } from '../../types/types.js';
+import { kebabCase } from '../../utils/kebabCase.js';
 
 const makeBranchName: MakeBranchName = ({ title, number }, type: string) => {
   const branchName = `${type}/${number}-${kebabCase(title)}`;
