@@ -1,2 +1,2 @@
-export { select } from "./select.js";
-export { input } from "./input.js";
+export { select } from './select.js';
+export { input } from './input.js';

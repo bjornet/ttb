@@ -6,6 +6,6 @@ type TBox<T> = {
 
 export const Box = <T>(x: T): TBox<T> => ({
   x,
-  map: f => Box(f(x)),
+  map: (f) => Box(f(x)),
   fold: () => x,
 });

@@ -1,11 +1,7 @@
-import { request } from "../client.js";
-import { GetBranch } from "../graphql/GetBranch.js";
+import { request } from '../client.js';
+import { GetBranch } from '../graphql/GetBranch.js';
 
-export const getBranch = async (
-  repoName: string,
-  repoOwner: string,
-  branchName: string
-) => {
+export const getBranch = async (repoName: string, repoOwner: string, branchName: string) => {
   const response = await request(GetBranch, {
     name: repoName,
     owner: repoOwner,

@@ -1,5 +1,5 @@
-import { graphql, GraphQlQueryResponseData } from "@octokit/graphql";
-import { getConfig } from "../config/getConfig.js";
+import { graphql, GraphQlQueryResponseData } from '@octokit/graphql';
+import { getConfig } from '../config/getConfig.js';
 
 type Request = (
   query: string,
@@ -12,7 +12,7 @@ export const request: Request = async (query: string, variables) => {
   const { activeCredential } = await getConfig();
 
   if (!activeCredential) {
-    console.log("No active credential found");
+    console.log('No active credential found');
     return null;
   }
 

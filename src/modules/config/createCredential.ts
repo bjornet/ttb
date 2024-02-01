@@ -1,11 +1,11 @@
-import { Credential } from "../../types/types.js";
-import { input } from "../questions/input.js";
+import { Credential } from '../../types/types.js';
+import { input } from '../questions/input.js';
 
 export const createCredential = async (): Promise<Credential> => {
-  const userProjectName = await input("What is your project name?");
-  const owner = await input("What is the name of the owner of the repository?");
-  const repo = await input("What is the name of the repository?");
-  const apiToken = await input("What is your personal access token?");
+  const userProjectName = await input('What is your project name?');
+  const owner = await input('What is the name of the owner of the repository?');
+  const repo = await input('What is the name of the repository?');
+  const apiToken = await input('What is your personal access token?');
 
   return {
     [userProjectName]: {

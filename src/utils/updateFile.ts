@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from 'fs';
 
 export const updateFile = (path: string, data: string): boolean => {
   try {
