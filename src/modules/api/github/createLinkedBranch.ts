@@ -1,11 +1,7 @@
-import { request } from "../client.js";
-import { CreateLinkedBranch } from "../graphql/CreateLinkedBranch.js";
+import { request } from '../client.js';
+import { CreateLinkedBranch } from '../graphql/CreateLinkedBranch.js';
 
-export const createLinkedBranch = async (
-  issueId: number,
-  fromBranchSHA: string,
-  name: string
-) => {
+export const createLinkedBranch = async (issueId: number, fromBranchSHA: string, name: string) => {
   const trimmedFromBranchSHA = fromBranchSHA.trim();
 
   const response = await request(CreateLinkedBranch, {

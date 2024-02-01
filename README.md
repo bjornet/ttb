@@ -1,4 +1,4 @@
-# ttb
+# Ticket To Branch – ttb
 
 A CLI tool to create a new branch from a ticket number in your project management tool.
 
@@ -6,7 +6,6 @@ A CLI tool to create a new branch from a ticket number in your project managemen
 
 - Node v13.x or higher
 - An Personal API token
-  - [JIRA](https://confluence.atlassian.com/enterprise/using-personal-access-tokens-1026032365.html)
   - [Github](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 
 ## Usage
@@ -46,7 +45,11 @@ ttb branch <ticket-number>
 
 ## Future
 
-Jira support is soon in progress. The goal is to be able to create a branch from a ticket number. The branch name will be the ticket number and the title of the ticket. The ticket number will be prepended with the ticket type. For example, `feature/ttb-1234-this-is-the-title-of-the-ticket`.
+- support for more project management tools
+  - high prio: Jira
+  - high prio: Gitlab
+  - low prio: Trello
+  - low prio: Assana
 
 ## Development
 

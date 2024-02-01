@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from 'fs';
 
 export const checkIfFileExists = (path: string): boolean => {
   const exists = fs.existsSync(path);

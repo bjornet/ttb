@@ -1,10 +1,10 @@
-import inquirer from "inquirer";
+import inquirer from 'inquirer';
 
 export const input = async (message: string) => {
   const questions = [
     {
-      type: "input",
-      name: "value",
+      type: 'input',
+      name: 'value',
       message,
     },
   ];

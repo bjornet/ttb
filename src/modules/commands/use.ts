@@ -1,30 +1,26 @@
-import ora from "ora";
-import { getConfig } from "../config/getConfig.js";
-import { select } from "../questions/select.js";
-import { makeActive } from "../config/makeActive.js";
+import ora from 'ora';
+import { getConfig } from '../config/getConfig.js';
+import { select } from '../questions/select.js';
+import { makeActive } from '../config/makeActive.js';
 
 export const use = async () => {
   const { credentials, activeCredentialName } = await getConfig();
   const spinner = ora();
 
   if (!credentials) {
-    spinner.fail(
-      "No config file found. Run 'ttb init' to create a config file."
-    );
+    spinner.fail("No config file found. Run 'ttb init' to create a config file.");
     return;
   }
 
   const _credentials = Object.keys(credentials);
 
   if (_credentials.length === 0) {
-    spinner.fail(
-      "You have no credentials to use, add a credential by running 'ttb add'."
-    );
+    spinner.fail("You have no credentials to use, add a credential by running 'ttb add'.");
     return;
   }
 
   const selectedCredential = await select(
-    "Select the credential you want to use.",
+    'Select the credential you want to use.',
     _credentials,
     activeCredentialName
   );
@@ -32,7 +28,7 @@ export const use = async () => {
   const credentialActivated = await makeActive(selectedCredential.toString());
 
   if (!credentialActivated) {
-    spinner.fail("Credential could not be activated.");
+    spinner.fail('Credential could not be activated.');
     return;
   }
 
