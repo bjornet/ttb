@@ -12,9 +12,13 @@ export type Config = {
   activeCredential: string;
 };
 
-export type ProjectManagementSystems = ['GitHub', 'Jira', 'Trello'];
+export type ProjectManagementSystems = [ProjectManagementSystem];
 
-export type ProjectManagementSystem = 'GitHub' | 'Jira' | 'Trello';
+/**
+ * @todo: Add more project management systems
+ * eg. [Github, Jira, GitLab, Trello, Asana]
+ */
+export type ProjectManagementSystem = 'GitHub';
 
 export type Issue = {
   title: string;

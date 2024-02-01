@@ -11,11 +11,7 @@ export const add = async () => {
 
   const { credentialsPath, credentialsExists } = await getConfig();
 
-  const projectManagementSystems: ProjectManagementSystems = [
-    "GitHub",
-    "Jira",
-    "Trello",
-  ];
+  const projectManagementSystems: ProjectManagementSystems = ['GitHub'];
 
   if (!credentialsExists) {
     spinner.fail('You must run "ttb init" before you can add a credential.');
