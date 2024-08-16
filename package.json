@@ -1,6 +1,6 @@
 {
   "name": "ttb",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A CLI tool to create a new branch from a ticket number in your project management tool.",
   "repository": {
     "type": "git",
