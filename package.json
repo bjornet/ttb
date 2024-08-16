@@ -4,12 +4,12 @@
   "description": "A CLI tool to create a new branch from a ticket number in your project management tool.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bjornet/ttb.git"
+    "url": "git+https://github.com/bjornet/ttb.git"
   },
   "homepage": "https://github.com/bjornet/ttb/tree/main#readme",
   "main": "./dist/index.js",
   "bin": {
-    "ttb": "./dist/index.js"
+    "ttb": "dist/index.js"
   },
   "scripts": {
     "build": "npx tsc -p tsconfig.json --noEmit false",
