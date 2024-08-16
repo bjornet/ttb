@@ -12,9 +12,11 @@ export const getBranch = async (
     branch: branchName,
   });
 
-  if (!response) {
+  if (!response || !response.repository || !response.repository.ref) {
     return null;
   }
+
+
 
   return response.repository.ref.name;
 };
